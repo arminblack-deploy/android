@@ -9,6 +9,8 @@ import Qt.labs.settings 1.0
 
 ApplicationWindow {
 
+    id                  : window
+
     visible             : true
 
     width               : Screen.width
@@ -118,20 +120,107 @@ ApplicationWindow {
 
             if( lbl4.text != "Empty !" ) {
                 obj.gethash(lbl4.text)
-                msgbox1.visible=true
+                gethashDialog.open()
             }
+
+        }
+    }
+
+    Button {
+
+    id                  : btn2
+    x                   : parent.width  / 2 - width  / 2
+    y                   : parent.height / 2 - height / 2 + 220
+    text                : "About-Me"
+
+    onClicked: {
+
+        aboutDialog.open()
 
         }
 
     }
-    MessageDialog {
 
-        id: msgbox1
-        title: "Message"
-        text: "Text -> " + txtf1.text + "\nhash : " + lbl4.text + "\nCopied to clipboard !"
+    Popup {
 
-        Component.onCompleted: visible = false
+        id              : aboutDialog
+        modal           : true
+        focus           : true
+        width           : 200
+        contentHeight   : 150
+        x               : parent.width  / 2 - width  / 2
+        y               : parent.height / 2 - height / 2
+
+        Column {
+
+            id          : aboutColumn
+            spacing     : 20
+
+            Label {
+
+                text    : "About"
+                font.bold: true
+            }
+
+            Label {
+
+                width   : aboutDialog.availableWidth
+                text    : "details :"
+                wrapMode: Label.Wrap
+                font.pixelSize: 14
+            }
+
+            Label {
+
+                width   : aboutDialog.availableWidth
+                text    : "Development by arminblack\nArmin.deploy@Gmail.com\nhttps://telegram.me/apping\nLicence GPL v3.0"
+                wrapMode: Label.Wrap
+                font.pixelSize: 12
+            }
+        }
+    }
+
+    Popup {
+
+        id              : gethashDialog
+        modal           : true
+        focus           : true
+        width           : 200
+        contentHeight   : 210
+        x               : parent.width  / 2 - width  / 2
+        y               : parent.height / 2 - height / 2
+
+        Column {
+
+            id          : gethashColumn
+            spacing     : 20
+
+            Label {
+
+                text    : "Clipboard"
+                font.bold: true
+            }
+
+            Label {
+
+                id      : lbx
+                width   : gethashDialog.availableWidth
+                text    : "Hash {\n\n" + lbl4.text + "\n\n}\n\nCopied to clipboard !"
+                wrapMode: Label.Wrap
+                font.pixelSize: 12
+            }
+
+            Button {
+
+                width   : gethashDialog.availableWidth
+                text    : "Ok"
+                font.pixelSize: 12
+                onClicked: {
+                    gethashDialog.close()
+                }
+            }
+
+        }
     }
 
 }
-
